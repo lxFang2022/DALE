@@ -51,11 +51,8 @@ def DALETraining(model, optimizer, masked_nonfuzzy_images, masked_nonfuzzy_label
     optimizer.zero_grad()
     fuzzy_outputs, fuzfea = model(masked_fuzzy_images)
 
-    if torch.sum(noisy_mask) > 0:
-        gass_loss = Gass(clean_mask, nonfuzzy_mask, masked_fuzzy_labels, masked_nonfuzzy_labels,
+    gass_loss = Gass(clean_mask, nonfuzzy_mask, masked_fuzzy_labels, masked_nonfuzzy_labels,
                          nonfea.detach(), fuzfea.detach(), parse_config.num_classes)
-    else:
-        gass_loss = 0
 
     seg_loss_fuzzy = structure_loss(fuzzy_outputs, masked_fuzzy_labels)
 
