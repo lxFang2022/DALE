@@ -59,6 +59,6 @@ def DALETraining(model, optimizer, masked_nonfuzzy_images, masked_nonfuzzy_label
 
     seg_loss_fuzzy = structure_loss(fuzzy_outputs, masked_fuzzy_labels)
 
-    loss_fuzzy = (seg_loss_fuzzy * optimal_w + parse_config.beta * gass_loss).mean()
+    loss_fuzzy = ((seg_loss_fuzzy + parse_config.beta * gass_loss) * optimal_w).mean()
     loss_fuzzy.backward()
     optimizer.step()
